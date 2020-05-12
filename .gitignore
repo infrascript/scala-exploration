@@ -1,4 +1,13 @@
-.metals/
 .bloop/
+.idea/libraries
+.idea/modules.xml
+.idea/scala_compiler.xml
+.idea/shelf
+.idea/tasks.xml
+.idea/usage.statistics.xml
+.idea/workspace.xml
+.metals/
+*.iws
+out/
 project/metals.sbt
 target/
