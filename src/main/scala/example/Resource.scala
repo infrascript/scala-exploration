@@ -15,7 +15,7 @@ package object AwsResources {
       privateKey: Input[String] = Computed,
       certificateBody: Input[String] = Computed,
       certificateChain: Input[String] = Computed,
-      certificateAuthorityArn: Input[String] = Computed
+      certificateAuthorityArn: Input[String] = Computed,
   )(implicit project: Project, provider: Provider)
       extends Resource
 

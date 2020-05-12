@@ -8,7 +8,7 @@ object Hello extends Greeting with App {
   import example.AwsResources._
 
   implicit val project  = new Project
-  implicit val provider = new Provider("AWS")
+  implicit val provider = Provider("AWS")
 
   val cert = AwsAcmCertificate(domainName = "www.example.com", privateKey = "thing")
 
@@ -16,10 +16,18 @@ object Hello extends Greeting with App {
   printOption(cert.privateKey)
   printOption(cert.certificateBody)
 
-  val customProvider = new Provider("AWS-Custom")
+  val customProvider = Provider("AWS-Custom")
 
-  val multipleCerts = MultipleCertsComponent(domain = "example.com")
+  val multipleCerts = MultipleCertsComponent(domain = "example.com")(provider = customProvider, project = implicitly)
   println(multipleCerts)
+
+  {
+    implicit val provider = Provider("CUSTOM")
+    Module("module-name")(implicitly) { (_) => AwsAcmCertificate(domainName = "module.example.com") }
+  }
+
+  val module = Module("string", Provider("ZZZZ"))
+  module { implicit provider: Provider => AwsAcmCertificate(domainName = "imodule.example.com") }
 }
 
 trait Greeting {
