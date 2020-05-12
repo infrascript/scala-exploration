@@ -23,11 +23,12 @@ object Hello extends Greeting with App {
 
   {
     implicit val provider: Provider = Provider("CUSTOM")
-    Module("module-name")(implicitly) { _ => AwsAcmCertificate(domainName = "module.example.com") }
+    Module("module-name") { _ => AwsAcmCertificate(domainName = "module.example.com") }
   }
 
-  val module = Module("string", Provider("ZZZZ"))
-  module { implicit provider: Provider => AwsAcmCertificate(domainName = "imodule.example.com") }
+  Module("string", Provider("ZZZZ")) { implicit provider: Provider =>
+    AwsAcmCertificate(domainName = "imodule.example.com")
+  }
 }
 
 trait Greeting {
