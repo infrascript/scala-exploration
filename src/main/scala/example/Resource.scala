@@ -10,12 +10,12 @@ package object AwsResources {
 
   case class AwsAcmCertificate(
       domainName: String,
-      subjectAlternateNames: Input[List[String]] = None,
-      validationMethod: Input[String] = None,
-      privateKey: Input[String] = None,
-      certificateBody: Input[String] = None,
-      certificateChain: Input[String] = None,
-      certificateAuthorityArn: Input[String] = None
+      subjectAlternateNames: Input[List[String]] = Computed,
+      validationMethod: Input[String] = Computed,
+      privateKey: Input[String] = Computed,
+      certificateBody: Input[String] = Computed,
+      certificateChain: Input[String] = Computed,
+      certificateAuthorityArn: Input[String] = Computed
   )(implicit project: Project, provider: Provider)
       extends Resource
 

@@ -13,9 +13,16 @@ object Hello extends Greeting with App {
 
   val cert =
     AwsAcmCertificate(domainName = "example.com", privateKey = "thing")
+
   println(cert.asJson.dropNullValues)
+  printOption(cert.privateKey)
 }
 
 trait Greeting {
   lazy val greeting: String = "hello"
+
+  def printOption(v: Option[String]) = v match {
+    case None        => println("EMPTY")
+    case Some(value) => println(value)
+  }
 }
