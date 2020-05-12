@@ -1,7 +1,7 @@
 package example
 
 case class Provider(name: String) {
-  def registerResource(resource: Resource) {
+  def registerResource(resource: Resource): Unit = {
     println(s"Using provider $name")
   }
 }

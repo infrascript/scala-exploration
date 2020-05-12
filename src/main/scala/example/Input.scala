@@ -1,6 +1,6 @@
 package example
 
-import io.circe.{Decoder, Encoder, Json}
+import io.circe.{Encoder, Json}
 
 case class ComputedOutput[T](value: T) {}
 
