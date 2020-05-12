@@ -7,21 +7,27 @@ object Hello extends Greeting with App {
   import example.types._
   import example.AwsResources._
 
-  implicit val project = new Project
+  implicit val project  = new Project
   implicit val provider = new Provider("AWS")
 
-  val cert =
-    AwsAcmCertificate(domainName = "example.com", privateKey = "thing")
+  val cert = AwsAcmCertificate(domainName = "www.example.com", privateKey = "thing")
 
   println(cert.asJson.dropNullValues)
   printOption(cert.privateKey)
+  printOption(cert.certificateBody)
+
+  val customProvider = new Provider("AWS-Custom")
+
+  val multipleCerts = MultipleCertsComponent(domain = "example.com")
+  println(multipleCerts)
 }
 
 trait Greeting {
   lazy val greeting: String = "hello"
 
-  def printOption(v: Option[String]) = v match {
-    case None        => println("EMPTY")
-    case Some(value) => println(value)
-  }
+  def printOption(v: Option[String]) =
+    v match {
+      case None        => println("EMPTY")
+      case Some(value) => println(value)
+    }
 }
