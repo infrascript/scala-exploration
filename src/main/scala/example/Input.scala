@@ -20,20 +20,14 @@ package object types {
     def get: Nothing = throw new NoSuchElementException("Computed.get")
   }
 
-  implicit final def encodeProvidedOrComputed[A](implicit e: Encoder[A]): Encoder[ProvidedOrComputed[A]] =
-    new Encoder[ProvidedOrComputed[A]] {
-      final def apply(a: ProvidedOrComputed[A]): Json =
-        a match {
-          case Provided(v) => e(v)
-          case Computed    => Json.Null
-        }
-    }
+  implicit final def encodeProvidedOrComputed[A](implicit e: Encoder[A]): Encoder[ProvidedOrComputed[A]] = {
+    case Provided(v) => e(v)
+    case Computed    => Json.Null
+  }
 
   implicit final def encodeProvided[A](implicit e: Encoder[A]): Encoder[Provided[A]] = e.contramap(_.get)
 
-  implicit final val encodeComputed: Encoder[Computed.type] = new Encoder[Computed.type] {
-    final def apply(a: Computed.type): Json = Json.Null
-  }
+  implicit final val encodeComputed: Encoder[Computed.type] = (_: Computed.type) => Json.Null
 
   type Input[T] = ProvidedOrComputed[T]
 
