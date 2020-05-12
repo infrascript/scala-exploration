@@ -4,8 +4,8 @@ import io.circe.generic.auto._
 import io.circe.syntax._
 
 object Hello extends Greeting with App {
-  import example.types._
   import example.AwsResources._
+  import example.types._
 
   implicit val project: Project   = new Project
   implicit val provider: Provider = Provider("AWS")
