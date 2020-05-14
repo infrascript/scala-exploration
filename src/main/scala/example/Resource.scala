@@ -1,6 +1,12 @@
 package example
 
-class Resource(implicit ctx: Context) {}
+class Resource($uid: String)(implicit ctx: Context) {
+  def computedUID() =
+    ctx.namespace match {
+      case None     => this.$uid
+      case Some(ns) => s"${ns}:${$uid}"
+    }
+}
 
 package object AwsResources {
   import example.types._
@@ -15,6 +21,6 @@ package object AwsResources {
       certificateChain: Input[String] = Computed,
       certificateAuthorityArn: Input[String] = Computed,
   )(implicit ctx: Context)
-      extends Resource
+      extends Resource($uid)
 
 }
