@@ -1,8 +1,15 @@
 package example
+import example.AwsResources._
 
-case class MultipleCertsComponent(domain: String)(implicit provider: Provider, project: Project) {
-  import example.AwsResources._
+trait Component {
+  def resources: List[Resource]
+}
 
-  val rootCert     = AwsAcmCertificate(domainName = domain, privateKey = "thing")
-  val wildcardCert = AwsAcmCertificate(domainName = s"*.$domain", privateKey = "thing")
+case class MultipleCertsComponent($uid: String, domain: String)(implicit ctx: Context) extends Component {
+  // implicit val ctx = this.ctx()
+
+  val rootCert     = AwsAcmCertificate("name", domainName = domain, privateKey = "thing")
+  val wildcardCert = AwsAcmCertificate("name", domainName = s"*.$domain", privateKey = "thing")
+
+  def resources: List[Resource] = List(rootCert, wildcardCert)
 }
