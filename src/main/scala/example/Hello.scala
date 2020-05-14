@@ -3,6 +3,10 @@ package example
 import io.circe.generic.auto._
 import io.circe.syntax._
 
+object Runtime {
+  def render(resources: List[Resource]): Unit = { resources.foreach(resource => { println(s"Rendering: $resource") }) }
+}
+
 object Hello extends Greeting with App {
   import example.AwsResources._
   import example.types._
@@ -26,9 +30,11 @@ object Hello extends Greeting with App {
     Module("module-name") { _ => AwsAcmCertificate(domainName = "module.example.com") }
   }
 
-  Module("string", Provider("ZZZZ")) { implicit provider: Provider =>
-    AwsAcmCertificate(domainName = "imodule.example.com")
+  val stringMod = Module("string", provider = Provider("ZZZZ")) { implicit provider: Provider =>
+    AwsAcmCertificate(domainName = "i-module.example.com")
   }
+
+  Runtime.render(stringMod.resources)
 }
 
 trait Greeting {

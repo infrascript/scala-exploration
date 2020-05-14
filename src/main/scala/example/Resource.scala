@@ -1,6 +1,6 @@
 package example
 
-class Resource(implicit project: Project, provider: Provider) {
+sealed class Resource(implicit project: Project, provider: Provider) {
   project.registerResource(this)
   provider.registerResource(this)
 }
