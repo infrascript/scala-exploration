@@ -12,7 +12,7 @@ package object AwsResources {
       domainName: String,
       subjectAlternateNames: Input[List[String]] = Computed,
       validationMethod: Input[String] = Computed,
-      privateKey: Input[String] = Computed,
+      privateKey: StringRefInput = Computed,
       certificateBody: Input[String] = Computed,
       certificateChain: Input[String] = Computed,
       certificateAuthorityArn: Input[String] = Computed,

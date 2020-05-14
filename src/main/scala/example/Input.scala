@@ -31,6 +31,9 @@ package object types {
 
   type Input[T] = ProvidedOrComputed[T]
 
+  type StringRefInput = Input[() => String]
+  implicit def toStringRefInput(v: => String): StringRefInput = Provided(() => v)
+
   implicit def stringToInputString(v: String): Input[String] = if (v == null) Computed else Provided(v)
 
   implicit def providedOrComputedToOptionT[T](v: ProvidedOrComputed[T]): Option[T] =

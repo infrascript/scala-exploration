@@ -14,11 +14,15 @@ object Hello extends Greeting with App {
   implicit val project: Project   = new Project
   implicit val provider: Provider = Provider("AWS")
 
-  val cert = AwsAcmCertificate(domainName = "www.example.com", privateKey = "thing")
-
-  println(cert.asJson.dropNullValues)
+  val cert = AwsAcmCertificate(domainName = "www.example.com")
+  println(cert)
   printOption(cert.privateKey)
   printOption(cert.certificateBody)
+
+  lazy val c1: AwsAcmCertificate = AwsAcmCertificate(domainName = "thing", privateKey = c2.domainName)
+  lazy val c2: AwsAcmCertificate = AwsAcmCertificate(domainName = "thing2", privateKey = c1.domainName)
+  println(c1)
+  println(c2)
 
   val customProvider = Provider("AWS-Custom")
 
@@ -40,7 +44,7 @@ object Hello extends Greeting with App {
 trait Greeting {
   lazy val greeting: String = "hello"
 
-  def printOption(v: Option[String]): Unit =
+  def printOption(v: Option[Any]): Unit =
     v match {
       case None        => println("EMPTY")
       case Some(value) => println(value)
