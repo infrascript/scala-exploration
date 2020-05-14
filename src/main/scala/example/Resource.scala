@@ -1,10 +1,11 @@
 package example
 
 class Resource($uid: String)(implicit ctx: Context) {
+  def kind = getClass().getSimpleName()
   def computedUID() =
     ctx.namespace match {
-      case None     => this.$uid
-      case Some(ns) => s"${ns}:${$uid}"
+      case None     => s"${kind}:${$uid}"
+      case Some(ns) => s"${ns}:${kind}:${$uid}"
     }
 }
 
