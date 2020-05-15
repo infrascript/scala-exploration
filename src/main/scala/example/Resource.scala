@@ -22,6 +22,8 @@ package object AwsResources {
       certificateChain: Input[String] = Computed,
       certificateAuthorityArn: Input[String] = Computed,
   )(implicit ctx: Context)
-      extends Resource($uid)
+      extends Resource($uid) {
+    if (privateKey.isInstanceOf[Provided[Any]]) { privateKey.get.setParent(this) }
+  }
 
 }

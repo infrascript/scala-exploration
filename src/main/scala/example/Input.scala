@@ -17,6 +17,16 @@ package object types {
     def get: Nothing = throw new NoSuchElementException("Computed.get")
   }
 
+  class Reference[T](value: => T, private var parent: Option[Resource] = None) {
+    def get: T    = value
+    def getParent = parent
+    def setParent(resource: Resource) =
+      parent match {
+        case Some(_) => ()
+        case None    => parent = Some(resource)
+      }
+  }
+
   implicit final def encodeInput[A](implicit e: Encoder[A]): Encoder[Input[A]] = {
     case Provided(v) => e(v)
     case Computed    => Json.Null
@@ -26,8 +36,8 @@ package object types {
 
   implicit final val encodeComputed: Encoder[Computed.type] = (_: Computed.type) => Json.Null
 
-  type StringRefInput = Input[() => String]
-  implicit def toStringRefInput(v: => String): StringRefInput = Provided(() => v)
+  type StringRefInput = Input[Reference[() => String]]
+  implicit def toStringRefInput(v: => String): StringRefInput = Provided(new Reference(() => v, None))
 
   implicit def stringToInputString(v: String): Input[String] = if (v == null) Computed else Provided(v)
 
