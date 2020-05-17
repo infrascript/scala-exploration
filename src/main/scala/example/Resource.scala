@@ -26,4 +26,10 @@ package object AwsResources {
     if (privateKey.isInstanceOf[Provided[Any]]) { privateKey.get.setParent(this) }
   }
 
+  case class Other private (prop: String) {}
+
+  object Other {
+    def apply(prop: String) = new Other(s"hello $prop")
+  }
+
 }

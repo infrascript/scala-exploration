@@ -7,6 +7,9 @@ import example.AwsResources._
 object Hello extends App {
   import example.types._
 
+  val other = Other("name")
+  println(other.prop)
+
   implicit val ctx: Context       = Context()
   implicit val provider: Provider = Provider("AWS")
 
