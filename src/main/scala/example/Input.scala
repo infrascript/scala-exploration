@@ -3,6 +3,7 @@ package example
 import io.circe.{Encoder, Json}
 import scala.language.implicitConversions
 
+// predictive outputs
 package object types {
 
   sealed abstract class Input[+A] {
