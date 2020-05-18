@@ -1,7 +1,5 @@
 package example
 
-import io.circe.generic.auto._
-import io.circe.syntax._
 import example.AwsResources._
 
 object Runtime {
