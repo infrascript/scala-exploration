@@ -7,6 +7,8 @@ class Resource($uid: String)(implicit ctx: Context) {
       case None     => s"${kind}:${$uid}"
       case Some(ns) => s"${ns}:${kind}:${$uid}"
     }
+
+  ctx.registerResource(this)
 }
 
 package object AwsResources {

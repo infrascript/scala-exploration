@@ -10,7 +10,9 @@ val circeVersion = "0.12.3"
 libraryDependencies ++= Seq("io.circe" %% "circe-core", "io.circe" %% "circe-generic", "io.circe" %% "circe-parser")
   .map(_ % circeVersion)
 
-libraryDependencies += "org.scala-graph" %% "graph-core" % "1.13.2"
+libraryDependencies += "org.scala-graph" %% "graph-core"        % "1.13.2"
+libraryDependencies += "org.scala-graph" %% "graph-constrained" % "1.13.2"
+libraryDependencies += "org.scala-graph" %% "graph-dot"         % "1.13.0"
 
 lazy val root = (project in file(".")).settings(
   name := "infrascript",
